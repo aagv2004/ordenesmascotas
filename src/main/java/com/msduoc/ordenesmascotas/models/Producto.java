@@ -1,17 +1,27 @@
 package com.msduoc.ordenesmascotas.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "producto")
 public class Producto {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "nombreProducto")
     private String nombreProducto;
+
+    @Column(name = "precio")
     private double precio;
 
-    public Producto(int id, String nombreProducto, double precio) {
-        this.id = id;
-        this.nombreProducto = nombreProducto;
-        this.precio = precio;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
     public String getNombreProducto() {
@@ -19,6 +29,10 @@ public class Producto {
     }
     public double getPrecio() {
         return precio;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setNombreProducto(String nombreProducto) {

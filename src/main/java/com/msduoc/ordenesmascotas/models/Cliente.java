@@ -1,17 +1,26 @@
 package com.msduoc.ordenesmascotas.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "apellido")
     private String apellido;
 
-    public Cliente(int id, String nombre, String apellido) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
     public String getNombre() {
@@ -19,6 +28,10 @@ public class Cliente {
     }
     public String getApellido() {
         return apellido;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setNombre(String nombre) {

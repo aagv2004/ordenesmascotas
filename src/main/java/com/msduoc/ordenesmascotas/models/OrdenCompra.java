@@ -3,30 +3,38 @@ package com.msduoc.ordenesmascotas.models;
 import java.util.ArrayList;
 import java.util.List;
 import com.msduoc.ordenesmascotas.enums.EstadoOrden;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "ordenCompra")
 public class OrdenCompra {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "fechaCreacion")
     private String fechaCreacion;
+
+    @Column(name = "estado")
     private EstadoOrden estado;
+
+    @Column(name = "cliente")
     private Cliente cliente;
+
+    @Column(name = "productos")
     private List<Producto> productos = new ArrayList<>();
+
+    @Column(name = "totalCompra")
     private double totalCompra;
 
-    public OrdenCompra(int id, String fechaCreacion, EstadoOrden estado, Cliente cliente, List<Producto> productos){
-        this.id = id;
-        this.fechaCreacion = fechaCreacion;
-        this.estado = estado;
-        this.cliente = cliente;
-        this.productos = productos;
 
-        double suma = 0;
-        for (Producto prod : productos) {
-            suma += prod.getPrecio();
-        }
-        this.totalCompra = suma;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
     public String getFechaCreacion() {
@@ -43,6 +51,10 @@ public class OrdenCompra {
     }
     public double getTotalCompra() {
         return totalCompra;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
     public void setFechaCreacion(String fechaCreacion) {
