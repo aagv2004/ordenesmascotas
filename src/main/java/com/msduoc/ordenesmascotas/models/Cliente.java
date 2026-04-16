@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "cliente")
@@ -15,9 +16,11 @@ public class Cliente {
     @Column(name = "cliente_id")
     private Long id;
 
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", message = "Este campo es obligatorio y permite solo letras.")
     @Column(name = "nombre")
     private String nombre;
 
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", message = "Este campo es obligatorio y permite solo letras.")
     @Column(name = "apellido")
     private String apellido;
 

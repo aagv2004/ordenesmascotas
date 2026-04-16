@@ -40,7 +40,7 @@ public class ClienteController {
     // Endpoints: POST
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente cliente) {
-        log.info("/POST creando cliente con id: {}", cliente.getId());
+        log.info("/POST creando cliente: {} {}", cliente.getNombre(), cliente.getApellido());
         return clienteService.createCliente(cliente);
     }
 

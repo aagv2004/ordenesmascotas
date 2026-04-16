@@ -58,14 +58,14 @@ public class OrdenCompraController {
     // Endpoints: POST
     @PostMapping
     public OrdenCompra creaOrden(@RequestBody OrdenCompra orden) {
-        log.info("/POST creando orden con id: {}", orden.getId());
+        log.info("/POST creando orden para cliente ID: {}", orden.getCliente().getId());
         return ordenCompraService.createOrden(orden);
     }
 
     // Endpoints: PUT
     @PutMapping("/{id}")
     public OrdenCompra updateOrden(@PathVariable Long id, @RequestBody OrdenCompra orden) {
-        log.info("/PUT actualizando orden con id: {}, del cliente: {} {}", id, orden.getCliente().getNombre(), orden.getCliente().getApellido());
+        log.info("/PUT actualizando orden con id: {}", id);
         return ordenCompraService.updateOrden(id, orden);
     }
 
