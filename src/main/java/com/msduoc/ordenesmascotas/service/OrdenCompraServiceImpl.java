@@ -86,8 +86,8 @@ public class OrdenCompraServiceImpl implements OrdenCompraService {
                 orden.setProductos(existente.getProductos());
             }
 
-            if (orden.getEstadoOrden() == null) {
-                orden.setEstado(existente.getEstadoOrden());
+            if (orden.getEstado() == null) {
+                orden.setEstado(existente.getEstado());
             }
 
             if (orden.getTotalCompra() == 0) {
@@ -104,5 +104,19 @@ public class OrdenCompraServiceImpl implements OrdenCompraService {
     @Override
     public void deleteOrden(Long id) {
         ordenCompraRepository.deleteById(id);
+    }
+
+    @Override
+    public List<OrdenCompra> findByEstado(EstadoOrden estado) {
+        List<OrdenCompra> todas = ordenCompraRepository.findAll();
+        List<OrdenCompra> filtradas = new ArrayList<>();
+
+        for (OrdenCompra ord : todas) {
+            if (ord.getEstado().equals(estado)) {
+                filtradas.add(ord);
+            }
+        }
+
+        return filtradas;
     }
 }

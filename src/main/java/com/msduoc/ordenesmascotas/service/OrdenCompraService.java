@@ -2,6 +2,7 @@ package com.msduoc.ordenesmascotas.service;
 
 import java.util.List;
 import java.util.Optional;
+import com.msduoc.ordenesmascotas.enums.EstadoOrden;
 import com.msduoc.ordenesmascotas.models.OrdenCompra;
 
 public interface OrdenCompraService {
@@ -10,4 +11,5 @@ public interface OrdenCompraService {
     OrdenCompra createOrden(OrdenCompra orden);
     OrdenCompra updateOrden(Long id, OrdenCompra orden);
     void deleteOrden(Long id);
+    List<OrdenCompra> findByEstado(EstadoOrden estado);
 }

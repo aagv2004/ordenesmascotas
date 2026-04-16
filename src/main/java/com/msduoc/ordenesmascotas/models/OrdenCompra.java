@@ -62,7 +62,7 @@ public class OrdenCompra {
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
-    public EstadoOrden getEstadoOrden() {
+    public EstadoOrden getEstado() {
         return estado;
     }
     public Cliente getCliente() {
