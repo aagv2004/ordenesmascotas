@@ -11,13 +11,12 @@ import com.msduoc.ordenesmascotas.repository.ProductoRepository;
 
 @Service
 public class ProductoServiceImpl implements ProductoService{
-    private final ClienteRepository clienteRepository;
+
     @Autowired
     private ProductoRepository productoRepository;
 
-    ProductoServiceImpl(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @Override
     public List<Producto> getAllProductos() {
