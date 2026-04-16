@@ -82,6 +82,7 @@ public class OrdenCompraServiceImpl implements OrdenCompraService {
             // Hay que recalcular por si ponen productos con valores nuevos o cambian sus valores.
             if (orden.getProductos() == null || orden.getProductos().isEmpty()) {
                 orden.setProductos(existente.getProductos());
+                orden.setTotalCompra(existente.getTotalCompra());
             } else {
                 double nuevaSuma = 0;
                 List<Producto> productosNuevos = new ArrayList<>();
