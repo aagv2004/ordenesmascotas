@@ -1,43 +1,65 @@
 package com.msduoc.ordenesmascotas.models;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.msduoc.ordenesmascotas.enums.EstadoOrden;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 
 @Entity
-@Table(name = "ordenCompra")
+@Table(name = "orden_compra")
 public class OrdenCompra {
+
+    // ========== Columnas ==========
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "orden_id")
     private Long id;
 
-    @Column(name = "fechaCreacion")
-    private String fechaCreacion;
+    @Column(name = "fecha_creacion", updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fechaCreacion;
 
+    @NotNull(message = "Estado es un campo obligatorio.")
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado")
     private EstadoOrden estado;
 
-    @Column(name = "cliente")
+    @NotNull(message = "Esta orden DEBE pertenecer a un cliente.")
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @Column(name = "productos")
-    private List<Producto> productos = new ArrayList<>();
+    @NotEmpty(message = "Esta orden DEBE tener productos, no puede estar vacía.")
+    @ManyToMany
+    @JoinTable(
+        name = "orden_productos", 
+        joinColumns = @JoinColumn(name = "orden_id"), 
+        inverseJoinColumns = @JoinColumn(name = "producto_id")
+    )
+    private List<Producto> productos;
 
-    @Column(name = "totalCompra")
+    @Positive(message = "El total de compra debe ser mayor a cero.")
+    @Column(name = "total_compra")
     private double totalCompra;
 
-
+    // ========== Getters ==========
     public Long getId() {
         return id;
     }
-    public String getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
     public EstadoOrden getEstadoOrden() {
@@ -53,11 +75,13 @@ public class OrdenCompra {
         return totalCompra;
     }
 
+    // ========== Setters ==========
+
     public void setId(Long id) {
         this.id = id;
     }
     
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
     public void setEstado(EstadoOrden estado) {
@@ -72,7 +96,4 @@ public class OrdenCompra {
     public void setTotalCompra(double totalCompra) {
         this.totalCompra = totalCompra;
     }
-
-
-
 }
