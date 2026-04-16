@@ -14,11 +14,17 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Override
     public List<Cliente> getAllClientes() {
+        if (clienteRepository.findAll().isEmpty()) {
+            throw new RuntimeException("/GET no hay clientes.");
+        }
         return clienteRepository.findAll();
     }
 
     @Override
     public Optional<Cliente> getClienteById(Long id) {
+        if (clienteRepository.findById(id) == null) {
+            throw new RuntimeException("/GET id no encontrado para mostrar detalle cliente.");
+        }
         return clienteRepository.findById(id);
     }
 
@@ -33,12 +39,15 @@ public class ClienteServiceImpl implements ClienteService{
             cliente.setId(id);
             return clienteRepository.save(cliente);
         } else {
-            return null;
+            throw new RuntimeException("/PUT id no encontrado para actualizar cliente.");
         }
     }
 
     @Override
     public void deleteCliente(Long id) {
+        if (clienteRepository.findById(id) == null) {
+            throw new RuntimeException("/DELETE id no encontrado para eliminar cliente.");
+        }
         clienteRepository.deleteById(id);
     }
 }

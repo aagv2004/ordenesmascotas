@@ -1,6 +1,7 @@
 package com.msduoc.ordenesmascotas.service;
 
 
+import com.msduoc.ordenesmascotas.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,27 @@ import com.msduoc.ordenesmascotas.repository.ProductoRepository;
 
 @Service
 public class ProductoServiceImpl implements ProductoService{
+    private final ClienteRepository clienteRepository;
     @Autowired
     private ProductoRepository productoRepository;
 
+    ProductoServiceImpl(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
+
     @Override
     public List<Producto> getAllProductos() {
+        if (clienteRepository.findAll().isEmpty()) {
+            throw new RuntimeException("/GET no hay productos.");
+        }
         return productoRepository.findAll();
     }
 
     @Override
     public Optional<Producto> getProductoById(Long id) {
+        if (clienteRepository.findById(id) == null) {
+            throw new RuntimeException("/GET id no encontrado para mostrar detalle producto.");
+        }
         return productoRepository.findById(id);
     }
 
@@ -34,12 +46,15 @@ public class ProductoServiceImpl implements ProductoService{
             producto.setId(id);
             return productoRepository.save(producto);
         } else {
-            return null;
+            throw new RuntimeException("/PUT id no encontrado para actualizar producto.");
         }
     }
 
     @Override
     public void deleteProducto(Long id) {
+        if (clienteRepository.findById(id) == null) {
+            throw new RuntimeException("/DELETE id no encontrado para eliminar producto.");
+        }
         productoRepository.deleteById(id);
     }
 }

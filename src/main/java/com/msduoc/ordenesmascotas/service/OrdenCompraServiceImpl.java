@@ -37,19 +37,16 @@ public class OrdenCompraServiceImpl implements OrdenCompraService {
 
     @Override
     public OrdenCompra createOrden(OrdenCompra orden) {
-        // Entregar el campo fecha creación que sirve cómo auditoría y 
-        // el estado como EMITIDA automáticamente si se prefiere cambiar luego se hace un put.
+
         orden.setFechaCreacion(LocalDate.now());
         orden.setEstado(EstadoOrden.EMITIDA);
 
-        // Verificamos que exista el cliente en el request, luego en bd y lo seteamos en la orden.
         if (orden.getCliente() != null && orden.getCliente().getId() != null) {
             Cliente existente = clienteRepository.findById(orden.getCliente().getId()).orElse(null);
             orden.setCliente(existente);
         }
         
-        // Si hay productos, suma el total del precio, entrégame la lista de esos productos 
-        // y setealos en la orden.
+        // Si hay productos, suma el total del precio y entrégame la lista de esos productos.
         if (orden.getProductos() != null && !orden.getProductos().isEmpty()) {
             double suma = 0; 
             List<Producto> productosDeclarados = new ArrayList<>();
@@ -77,32 +74,43 @@ public class OrdenCompraServiceImpl implements OrdenCompraService {
             orden.setId(id);
             orden.setFechaCreacion(existente.getFechaCreacion());
 
-            // Pregunto si me traes los demás datos, sino: dejo los que ya tenía.
+            // Pregunto si traes los demás datos, sino: dejo los que ya tenía.
             if (orden.getCliente() == null) {
                 orden.setCliente(existente.getCliente());
             }
 
+            // Hay que recalcular por si ponen productos con valores nuevos o cambian sus valores.
             if (orden.getProductos() == null || orden.getProductos().isEmpty()) {
                 orden.setProductos(existente.getProductos());
+            } else {
+                double nuevaSuma = 0;
+                List<Producto> productosNuevos = new ArrayList<>();
+                for (Producto p : orden.getProductos()) {
+                    Producto prodExistente = productoRepository.findById(p.getId()).orElse(null);
+                    if (prodExistente != null) {
+                        nuevaSuma += prodExistente.getPrecio();
+                        productosNuevos.add(prodExistente);
+                    }
+                }
+                orden.setProductos(productosNuevos);
+                orden.setTotalCompra(nuevaSuma);
             }
 
             if (orden.getEstado() == null) {
                 orden.setEstado(existente.getEstado());
             }
 
-            if (orden.getTotalCompra() == 0) {
-                orden.setTotalCompra(existente.getTotalCompra());
-            }
-
-
             return ordenCompraRepository.save(orden);
         } else {
-            return null;
+            throw new RuntimeException("/PUT id de orden no encontrado para actualizar.");
         }
     }
 
     @Override
     public void deleteOrden(Long id) {
+        if (ordenCompraRepository.findById(id) == null) {
+            throw new RuntimeException("/DELETE id de orden no encontrado para eliminar.");
+        }
         ordenCompraRepository.deleteById(id);
     }
 
