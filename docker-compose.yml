@@ -6,7 +6,7 @@ services:
   ports:
    - "8080:8080"
   environment:
-   - spring.datasource.url=jdbc:oracle:thin:@j5q4b1nob2t8v68g_tp?TNS_ADMIN=/app/wallet/
+   - spring.datasource.url=jdbc:oracle:thin:@j5q4b1nob2t8v68g_high?TNS_ADMIN=/app/wallet
    - spring.datasource.username=FS_SUMATIVA2
    - spring.datasource.password=Holaquetal123@
   restart: always
