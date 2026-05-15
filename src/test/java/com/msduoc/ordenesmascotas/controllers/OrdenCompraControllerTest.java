@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msduoc.ordenesmascotas.controllers.api.OrdenCompraController;
 import com.msduoc.ordenesmascotas.enums.EstadoOrden;
 import com.msduoc.ordenesmascotas.models.Cliente;
 import com.msduoc.ordenesmascotas.models.OrdenCompra;
@@ -60,7 +61,7 @@ public class OrdenCompraControllerTest {
     @Test
     void testGetAllOrdenes() throws Exception {
         when(service.getAllOrdenes()).thenReturn(Arrays.asList(orden));
-        mockMvc.perform(get("/ordenes"))
+        mockMvc.perform(get("/api/ordenes"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(Arrays.asList(orden))));
     }
@@ -68,7 +69,7 @@ public class OrdenCompraControllerTest {
     @Test
     void testGetOrdenById() throws Exception {
         when(service.getOrdenById(2L)).thenReturn(Optional.of(orden));
-        mockMvc.perform(get("/ordenes/2"))
+        mockMvc.perform(get("/api/ordenes/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(orden)));
     }
@@ -76,7 +77,7 @@ public class OrdenCompraControllerTest {
     @Test
     void testCreateOrden() throws Exception {
         when(service.createOrden(any(OrdenCompra.class))).thenReturn(orden);
-        mockMvc.perform(post("/ordenes")
+        mockMvc.perform(post("/api/ordenes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(orden)))
                 .andExpect(status().isOk())
@@ -88,7 +89,7 @@ public class OrdenCompraControllerTest {
     @Test
     void testUpdateOrden() throws Exception {
         when(service.updateOrden(eq(2L), any(OrdenCompra.class))).thenReturn(orden);
-        mockMvc.perform(put("/ordenes/2")
+        mockMvc.perform(put("/api/ordenes/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(orden)))
                 .andExpect(status().isOk())
@@ -97,7 +98,7 @@ public class OrdenCompraControllerTest {
 
     @Test
     void testDeleteOrden() throws Exception {
-        mockMvc.perform(delete("/ordenes/2"))
+        mockMvc.perform(delete("/api/ordenes/2"))
                 .andExpect(status().isOk());
 
         verify(service).deleteOrden(2L);

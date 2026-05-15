@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}"> Listado de Órdenes</title>
+
+</head>
+<body>
+
+    <h1 th:text="${titulo}">Listado de Órdenes</h1>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha creación</th>
+                <th>Estado</th>
+                <th>Cliente</th>
+                <th>Total compra</th>
+                <th>Productos</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="orden : ${ordenes}">
+                <td th:text="${orden.id}">1</td>
+                <td th:text="${orden.fechaCreacion}">2026-05-14</td>
+                <td th:text="${orden.estado}">EMITIDA</td>
+
+                <td th:text="${orden.cliente != null ? orden.cliente.nombre : 'Sin cliente'}">
+                    Cliente ejemplo
+                </td>
+
+                <td th:text="${orden.totalCompra}">10000</td>
+
+                <td>
+                    <ul>
+                        <li th:each="producto : ${orden.productos}"
+                            th:text="${producto.nombreProducto}">
+                            Producto ejemplo
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

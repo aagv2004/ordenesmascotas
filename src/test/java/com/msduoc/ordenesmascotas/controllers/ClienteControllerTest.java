@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.Optional;
-
+import com.msduoc.ordenesmascotas.controllers.api.ClienteController;
 import com.msduoc.ordenesmascotas.models.Cliente;
 import com.msduoc.ordenesmascotas.service.ClienteService;
 
@@ -44,7 +44,7 @@ public class ClienteControllerTest {
     @Test
     void testGetAllClientes() throws Exception {
         when(service.getAllClientes()).thenReturn(Arrays.asList(cliente));
-        mockMvc.perform(get("/clientes"))
+        mockMvc.perform(get("/api/clientes"))
             .andExpect(status().isOk())
             .andExpect(content().json(mapper.writeValueAsString(Arrays.asList(cliente))));
     }
@@ -52,7 +52,7 @@ public class ClienteControllerTest {
     @Test
     void testGetClienteById() throws Exception {
         when(service.getClienteById(1L)).thenReturn(Optional.of(cliente));
-        mockMvc.perform(get("/clientes/1"))
+        mockMvc.perform(get("/api/clientes/1"))
             .andExpect(status().isOk())
             .andExpect(content().json(mapper.writeValueAsString(cliente)));
     }
@@ -60,7 +60,7 @@ public class ClienteControllerTest {
     @Test
     void testCreateCliente() throws Exception {
         when(service.createCliente(any(Cliente.class))).thenReturn(cliente);
-        mockMvc.perform(post("/clientes")
+        mockMvc.perform(post("/api/clientes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(cliente)))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class ClienteControllerTest {
     @Test
     void testUpdateCliente() throws Exception {
         when(service.updateCliente(eq(1L), any(Cliente.class))).thenReturn(cliente);
-        mockMvc.perform(put("/clientes/1")
+        mockMvc.perform(put("/api/clientes/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(cliente)))
                 .andExpect(status().isOk())
@@ -79,7 +79,7 @@ public class ClienteControllerTest {
 
     @Test
     void testDeleteCliente() throws Exception {
-        mockMvc.perform(delete("/clientes/1"))
+        mockMvc.perform(delete("/api/clientes/1"))
                 .andExpect(status().isOk());
         verify(service).deleteCliente(1L);
     }

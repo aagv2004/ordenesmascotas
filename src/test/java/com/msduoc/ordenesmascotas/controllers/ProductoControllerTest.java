@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.Optional;
-
+import com.msduoc.ordenesmascotas.controllers.api.ProductoController;
 import com.msduoc.ordenesmascotas.models.Producto;
 import com.msduoc.ordenesmascotas.service.ProductoService;
 
@@ -44,7 +44,7 @@ public class ProductoControllerTest {
     @Test
     void testGetAllProductos() throws Exception {
         when(service.getAllProductos()).thenReturn(Arrays.asList(producto));
-        mockMvc.perform(get("/productos"))
+        mockMvc.perform(get("/api/productos"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(Arrays.asList(producto))));
     }
@@ -52,7 +52,7 @@ public class ProductoControllerTest {
     @Test
     void testGetProductoById() throws Exception {
         when(service.getProductoById(3L)).thenReturn(Optional.of(producto));
-        mockMvc.perform(get("/productos/3"))
+        mockMvc.perform(get("/api/productos/3"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(producto)));
     }
@@ -60,7 +60,7 @@ public class ProductoControllerTest {
     @Test
     void testCreateProducto() throws Exception {
         when(service.createProducto(any(Producto.class))).thenReturn(producto);
-        mockMvc.perform(post("/productos")
+        mockMvc.perform(post("/api/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(producto)))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class ProductoControllerTest {
     @Test
     void testUpdateProducto() throws Exception {
         when(service.updateProducto(eq(3L), any(Producto.class))).thenReturn(producto);
-        mockMvc.perform(put("/productos/3")
+        mockMvc.perform(put("/api/productos/3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(producto)))
                 .andExpect(status().isOk())
@@ -79,7 +79,7 @@ public class ProductoControllerTest {
 
     @Test
     void testDeleteProducto() throws Exception {
-        mockMvc.perform(delete("/productos/3"))
+        mockMvc.perform(delete("/api/productos/3"))
                 .andExpect(status().isOk());
         verify(service).deleteProducto(3L);
     }

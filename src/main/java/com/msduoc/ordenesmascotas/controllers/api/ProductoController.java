@@ -1,4 +1,4 @@
-package com.msduoc.ordenesmascotas.controllers;
+package com.msduoc.ordenesmascotas.controllers.api;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
     private static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 
