@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${titulo}"> Listado de Órdenes</title>
-
-</head>
+<head th:replace="~{layout/base :: head(${titulo})}"></head>
 <body>
 
-    <h1 th:text="${titulo}">Listado de Órdenes</h1>
+    <header th:replace="~{layout/base :: navbar}"></header>
 
-    <table border="1" cellpadding="8">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Fecha creación</th>
-                <th>Estado</th>
-                <th>Cliente</th>
-                <th>Total compra</th>
-                <th>Productos</th>
-            </tr>
-        </thead>
+    <main class="contenedor">
+        <h1 class="titulo" th:text="${titulo}">Listado de Órdenes</h1>
 
-        <tbody>
-            <tr th:each="orden : ${ordenes}">
-                <td th:text="${orden.id}">1</td>
-                <td th:text="${orden.fechaCreacion}">2026-05-14</td>
-                <td th:text="${orden.estado}">EMITIDA</td>
+        <div class="acciones-superiores">
+            <a class="btn btn-primary" th:href="@{/app/ordenes/nuevo}">
+                + Nueva órden
+            </a>
+        </div>
 
-                <td th:text="${orden.cliente != null ? orden.cliente.nombre : 'Sin cliente'}">
-                    Cliente ejemplo
-                </td>
+        <table class="tabla" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha creación</th>
+                    <th>Estado</th>
+                    <th>Cliente</th>
+                    <th>Total compra</th>
+                    <th>Productos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-                <td th:text="${orden.totalCompra}">10000</td>
+            <tbody>
+                <tr th:each="orden : ${ordenes}">
+                    <td th:text="${orden.id}">1</td>
+                    <td th:text="${orden.fechaCreacion}">2026-05-14</td>
+                    <td th:text="${orden.estado}">EMITIDA</td>
 
-                <td>
-                    <ul>
-                        <li th:each="producto : ${orden.productos}"
-                            th:text="${producto.nombreProducto}">
-                            Producto ejemplo
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <td th:text="${orden.cliente != null ? orden.cliente.nombre : 'Sin cliente'}">
+                        Cliente ejemplo
+                    </td>
+
+                    <td th:text="${orden.totalCompra}">10000</td>
+
+                    <td>
+                        <ul>
+                            <li th:each="producto : ${orden.productos}"
+                                th:text="${producto.nombreProducto}">
+                                Producto ejemplo
+                            </li>
+                        </ul>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/app/ordenes/editar/{id}(id=${orden.id})}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
 </body>
 </html>

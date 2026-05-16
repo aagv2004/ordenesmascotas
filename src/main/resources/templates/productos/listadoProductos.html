@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${titulo}">Listado de Productos</title>
-
-</head>
+<head th:replace="~{layout/base :: head(${titulo})}"></head>
 <body>
-    <h1 th:text="${titulo}">Listado de Productos</h1>
-    <table border="1" cellpadding="8">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre producto</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            <tr th:each="producto : ${productos}">
-                <td th:text="${producto.id}">1</td>
-                <td th:text="${producto.nombreProducto}">ejemplo producto</td>
-                <td th:text="${producto.precio}">$</td>
-            </tr>
-        </tbody>
-    </table>
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="contenedor">
+
+        <h1 class="titulo" th:text="${titulo}">Listado de Productos</h1>
+
+        <div class="acciones-superiores">
+            <a class="btn btn-primary" th:href="@{/app/clientes/nuevo}">
+                + Nuevo cliente
+            </a>
+        </div>
+
+        <table class="tabla" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre producto</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.id}">1</td>
+                    <td th:text="${producto.nombreProducto}">ejemplo producto</td>
+                    <td th:text="${producto.precio}">$</td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/app/productos/editar/{id}(id=${producto.id})}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
 </body>
 </html>

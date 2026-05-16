@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">órdenes Mascotas</title>
+
+    <!-- Estilos generales -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+    <header th:fragment="navbar">
+        <nav class="navbar">
+            <a th:href="@{/}" class="navbar-logo">Órdenes mascotas</a>
+
+            <div class="navbar-links">
+                <a th:href="@{/app/clientes}">Clientes</a>
+                <a th:href="@{/app/productos}">Productos</a>
+                <a th:href="@{/app/ordenes}">Órdenes</a>
+            </div>
+        </nav>
+    </header>
+
+    <footer th:fragment="footer">
+        <footer class="footer">
+            <p>Proyecto FullStack - Órdenes Mascotas</p>
+        </footer>
+    </footer>
+
+</body>
+</html>

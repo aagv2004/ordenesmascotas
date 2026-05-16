@@ -1,0 +1,58 @@
+<head th:replace="~{layout/base :: head(${titulo})}"></head>
+<main class="contenedor">
+    <h1 class="titulo" th:text="${titulo}">Formulario Órdenes</h1>
+
+    <form class="form-card"
+        th:action="@{/app/ordenes/guardar}"
+        th:object="${orden}"
+        method="post">
+    
+        <input type="hidden" th:field="*{id}">
+
+        
+        <div class="form-group">
+            <label>Asignar a cliente</label>
+            <select th:field="*{cliente.id}">
+                <option th:each="cliente : ${clientes}"
+                th:value="${cliente.id}"
+                th:text="${cliente.nombre + ' '+ cliente.apellido}">
+                Cliente ejemplo
+            </option>
+        </select>
+        </div>
+    
+        <div class="form-group">
+            <label>Productos disponibles</label>
+            <select th:field="*{productos}" multiple required>
+                <option th:each="producto : ${productos}"
+                th:value="${producto.id}"
+                th:text="${producto.nombreProducto}">
+                Producto ejemplo
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group" th:if="${orden.id != null}">
+            <label>Estado</label>
+            <select th:field="*{estado}">
+                <option value="" disabled selected> Selecciona una opción</option>
+                <option 
+                    th:each="estado : ${estadoOrden}"
+                    th:value="${estado}"
+                    th:text="${estado.name()}"></option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                        Guardar
+            </button>
+
+            <a th:href="@{/app/ordenes}" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </div>
+    </form>
+
+
+</main>
