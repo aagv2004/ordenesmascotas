@@ -28,7 +28,7 @@ public class OrdenVistaController {
     @GetMapping("/app/ordenes")
     public String listarOrdenes(Model model) {
         model.addAttribute("ordenes", ordenCompraService.getAllOrdenes());
-        model.addAttribute("titulo", "Listado de Órdenes de Compra");
+        model.addAttribute("titulo", "Listado de Ordenes de Compra");
         return "ordenes/listadoOrdenes";
     }
 

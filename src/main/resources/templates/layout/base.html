@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(titulo)">
     <meta charset="UTF-8">
-    <title th:text="${titulo}">órdenes Mascotas</title>
+    <title th:text="${titulo}">Ordenes Mascotas</title>
 
     <!-- Estilos generales -->
     <link rel="stylesheet" th:href="@{/css/styles.css}">
@@ -11,19 +11,19 @@
 
     <header th:fragment="navbar">
         <nav class="navbar">
-            <a th:href="@{/}" class="navbar-logo">Órdenes mascotas</a>
+            <a th:href="@{/}" class="navbar-logo">Ordenes mascotas</a>
 
             <div class="navbar-links">
                 <a th:href="@{/app/clientes}">Clientes</a>
                 <a th:href="@{/app/productos}">Productos</a>
-                <a th:href="@{/app/ordenes}">Órdenes</a>
+                <a th:href="@{/app/ordenes}">Ordenes</a>
             </div>
         </nav>
     </header>
 
     <footer th:fragment="footer">
         <footer class="footer">
-            <p>Proyecto FullStack - Órdenes Mascotas</p>
+            <p>Proyecto FullStack - Ordenes Mascotas</p>
         </footer>
     </footer>
 
